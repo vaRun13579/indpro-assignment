@@ -1,0 +1,30 @@
+# Node.js (Backend)
+server/node_modules/
+server/.env
+server/package-lock.json
+server/logs/
+server/debug.log
+server/temp/
+server/uploads/
+
+# SQLite database files
+server/*.sqlite
+server/*.sqlite3
+server/*.db-journal
+
+# React (Frontend)
+task_manager/node_modules/
+task_manager/package-lock.json
+
+# # System Files
+# .DS_Store
+# Thumbs.db
+# *.log
+# *.tmp
+
+# # IDE and Editor Files
+# .vscode/
+# .idea/
+# *.swp
+# *.swo
+# *.swn
