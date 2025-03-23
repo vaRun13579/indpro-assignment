@@ -30,28 +30,28 @@ const initilizeDatabaseServer=async function(){
 }
 
 initilizeDatabaseServer().then(async()=>{
-    // let a=await db.run(`CREATE TABLE IF NOT EXISTS users (
-    //         id TEXT UNIQUE NOT NULL,
-    //         name TEXT NOT NULL,
-    //         username TEXT UNIQUE NOT NULL,
-    //         email TEXT UNIQUE NOT NULL,
-    //         password TEXT NOT NULL,
-    //         gender TEXT NOT NULL,
-    //         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    //         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
-    //     );
-    // `)
-    // let b=await db.run(`CREATE TABLE IF NOT EXISTS tasks (
-    //         id STRING PRIMARY KEY,
-    //         user_id STRING NOT NULL,
-    //         title TEXT NOT NULL,
-    //         description TEXT,
-    //         status TEXT NOT NULL CHECK (status IN ('done', 'pending', 'in progress', 'completed')),
-    //         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    //         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    //         FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
-    //     );
-    // `);
+    let a=await db.run(`CREATE TABLE IF NOT EXISTS users (
+            id TEXT UNIQUE NOT NULL,
+            name TEXT NOT NULL,
+            username TEXT UNIQUE NOT NULL,
+            email TEXT UNIQUE NOT NULL,
+            password TEXT NOT NULL,
+            gender TEXT NOT NULL,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+        );
+    `)
+    let b=await db.run(`CREATE TABLE IF NOT EXISTS tasks (
+            id STRING PRIMARY KEY,
+            user_id STRING NOT NULL,
+            title TEXT NOT NULL,
+            description TEXT,
+            status TEXT NOT NULL CHECK (status IN ('done', 'pending', 'in progress', 'completed')),
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+        );
+    `);
     // const isThere= await db.get(`SELECT username FROM users WHERE username=='varun@123';`);
     // const checkUserName= await db.get(`SELECT username FROM users where id='c6e92117-2140-45e2-a3c5-999b816b1aed';`);
     // console.log("query results:",isThere, checkUserName);
