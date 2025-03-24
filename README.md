@@ -39,7 +39,8 @@ Task Management/
 ## 📌 Setup Instructions
 ### **1️⃣ Clone the Repository**
 ```
-git clone https://github.com/vaRun13579/task-management-application.git
+git clone https://github.com/vaRun13579/indpro-assignment.git
+if clone not working then please download the zip file of above code.
 cd task-management-application
 ```
 
