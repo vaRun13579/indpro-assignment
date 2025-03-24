@@ -16,22 +16,29 @@ const LoginPage = () => {
   const checkDetails = async (ev) => {
     ev.preventDefault();
     const url = URL+"/login";
+    console.log(url);
     const options = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, password }),
     };
 
-    const response = await fetch(url, options);
-    const data = await response.json();
+    try{
+      const response = await fetch(url, options);
+      const data = await response.json();
 
-    if (response.ok) {
-      Cookies.set("jwt_token", data.jwt_token, { expires: 30 });
-      setIsFail(false);
-      navigate("/", { replace: true });
-    } else {
+      if (response.ok) {
+        Cookies.set("jwt_token", data.jwt_token, { expires: 30 });
+        setIsFail(false);
+        navigate("/", { replace: true });
+      } else {
+        setIsFail(true);
+        setErrMsg(data.message);
+      }
+    } catch(er){
+      console.log(er.message);
       setIsFail(true);
-      setErrMsg(data.message);
+      setErrMsg(er.message);
     }
   };
 

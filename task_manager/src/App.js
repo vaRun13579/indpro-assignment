@@ -12,7 +12,8 @@ import ViewProfile from "./components/ViewProfile";
 import './App.css';
 
 function App() {
-  const URL="http://localhost:5000".trim("/");
+  // const URL="http://localhost:5000".trim("/");
+  const URL="https://upgraded-fortnight-4pxqq55pqr9hwr5-5000.app.github.dev";
   const [name, setName] = useState("");
   const [userId, setUserId] = useState("");
 
