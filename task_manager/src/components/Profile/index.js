@@ -1,13 +1,15 @@
 import {useState, useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 import Cookies from "js-cookie";
+import { useUrl } from "../../App";
 import "./index.css"
 
 const Profile = (props)=>{
     const {updateName}=props;
+    const {URL}=useUrl();
     const token=Cookies.get('jwt_token');
     const [details, setDetails]=useState({});
-    const api="http://localhost:5000/profile";
+    const api=URL+"/profile";
     const navigate=useNavigate();
 
     const options={

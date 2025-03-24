@@ -1,5 +1,5 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import UserContext from "./context/UserContext.js";
 
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -12,11 +12,12 @@ import ViewProfile from "./components/ViewProfile";
 import './App.css';
 
 function App() {
+  const URL="http://localhost:5000".trim("/");
   const [name, setName] = useState("");
   const [userId, setUserId] = useState("");
 
   return (
-    <UserContext.Provider value={{ name, userId, setUserId, setName }}>
+    <UserContext.Provider value={{URL, name, userId, setUserId, setName }}>
       <Routes>
         <Route path="/" element={<ProtectedRoute><Dashboard name={name} userId={userId} /></ProtectedRoute>} />
         <Route path="/viewprofile" element={<ProtectedRoute><ViewProfile /></ProtectedRoute>} />
@@ -29,4 +30,7 @@ function App() {
   );
 }
 
+const useUrl=()=>useContext(UserContext);
+
 export default App;
+export {useUrl};

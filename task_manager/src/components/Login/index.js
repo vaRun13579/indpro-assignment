@@ -1,6 +1,7 @@
 import Cookies from "js-cookie";
 import { useNavigate, Link, Navigate } from "react-router-dom";
 import { useState } from "react";
+import { useUrl } from "../../App";
 import "./index.css";
 
 const LoginPage = () => {
@@ -10,10 +11,11 @@ const LoginPage = () => {
   const [isFail, setIsFail] = useState(false);
   const [errMsg, setErrMsg] = useState("");
   const navigate = useNavigate();
+  const {URL}=useUrl();
 
   const checkDetails = async (ev) => {
     ev.preventDefault();
-    const url = "http://localhost:5000/login";
+    const url = URL+"/login";
     const options = {
       method: "POST",
       headers: { "Content-Type": "application/json" },

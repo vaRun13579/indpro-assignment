@@ -1,6 +1,7 @@
 import {useState, useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 import Cookies from "js-cookie";
+import { useUrl } from "../../App";
 import "./index.css";
 
 const ViewProfile=()=>{
@@ -14,10 +15,11 @@ const ViewProfile=()=>{
     const [errorMsg, setError]=useState("");
     const token=Cookies.get('jwt_token');
     const navigate=useNavigate();
+    const {URL}=useUrl();
 
     async function saveEditedProfile(){
         if(edit){
-            const api=`http://localhost:5000/profile/edit`;
+            const api=`${URL}/profile/edit`;
             const options={
                 method:"PUT",
                 headers:{
@@ -46,7 +48,7 @@ const ViewProfile=()=>{
     }
 
     async function call(){
-        const api=`http://localhost:5000/profile`;
+        const api=`${URL}/profile`;
         const options={
             method:"GET",
             headers:{

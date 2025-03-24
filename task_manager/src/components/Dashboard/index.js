@@ -1,6 +1,7 @@
 import { Component } from "react";
 import {useNavigate} from "react-router-dom";
 import Cookies from "js-cookie";
+import {useUrl} from "../../App";
 import CreateTodo from "../CreateTask";
 import TaskItem from "../TaskItem";
 import Profile from "../Profile";
@@ -12,7 +13,8 @@ class Dashboard extends Component {
     state = { todoList: [], filter: filters[0], taskDone: 0, name: "", createTodo: false, searchQuery: "" };
 
     deleteATask = async (id) => {
-        const api = `http://localhost:5000/task/${id}/delete`;
+        const {URL}=this.props;
+        const api = `${URL}/${id}/delete`;
         const token = Cookies.get('jwt_token');
         const options = {
             method: "DELETE",
@@ -39,7 +41,8 @@ class Dashboard extends Component {
 
     fetchList = async () => {
         const token = Cookies.get('jwt_token');
-        const api = "http://localhost:5000/";
+        const {URL}=this.props;
+        const api = URL;
         const options = {
             method: "GET",
             headers: {
@@ -56,7 +59,8 @@ class Dashboard extends Component {
 
     createTodoFun = async (obj) => {
         const token = Cookies.get("jwt_token");
-        const api = "http://localhost:5000/task/add";
+        const {URL}=this.props;
+        const api = URL+"/task/add";
         const options = {
             method: "POST",
             headers: {
@@ -152,7 +156,8 @@ class Dashboard extends Component {
 
 function DashboardWrapper(props) {
     const navigate = useNavigate();
-    return <Dashboard {...props} navigate={navigate} />;
+    const {URL}=useUrl();
+    return <Dashboard {...props} navigate={navigate} URL={URL} />;
 }
 
 export default DashboardWrapper;

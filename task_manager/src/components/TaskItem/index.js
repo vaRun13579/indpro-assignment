@@ -1,5 +1,6 @@
 import {useState} from "react";
 import Cookies from "js-cookie";
+import { useUrl } from "../../App"; 
 import "./index.css";
 
 export default (props)=>{
@@ -10,6 +11,7 @@ export default (props)=>{
     const [eDescription, setDesc]=useState(description);
     const [eStatus, setStatus]=useState(status);
     const token=Cookies.get('jwt_token');
+    const {URL}=useUrl();
 
 
     // const colors=["#EDDFE0","#73EC8B","#6A9AB0","#C96868","#FCDE70","#EAE4DD","#EECAD5"];
@@ -23,7 +25,7 @@ export default (props)=>{
 
     const saveEdit=()=>{
         async function call(){
-            const api=`http://localhost:5000/task/${id}/edit`;
+            const api=`${URL}/task/${id}/edit`;
             const options={
                 method:"PUT",
                 headers:{

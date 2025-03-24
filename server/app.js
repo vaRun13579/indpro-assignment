@@ -21,7 +21,7 @@ const initilizeDatabaseServer=async function(){
             driver:sqlite3.Database,
         });
         app.listen(5000,()=>{
-            console.log("The Database has initilized successfully at http://localhost:5000/");
+            console.log("The Database has initilized successfully");
         })
     } catch(e){
         console.log("Unknown Error Occured ",e);
@@ -67,6 +67,8 @@ function getRandomColor(){
 
 //middleware authentication function
 const authenticateToken = (request, response, next) => {
+    const fullUrl = request.protocol + '://' + request.get('host') + request.originalUrl;
+    console.log(fullUrl);
     let jwtToken;
     const authHeader = request.headers["authorization"];
     if (authHeader !== undefined) {

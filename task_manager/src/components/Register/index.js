@@ -1,4 +1,5 @@
 import { useState } from "react";
+import {useUrl} from "../../App.js";
 import "./index.css";
 
 const Register = () => {
@@ -11,6 +12,7 @@ const Register = () => {
     const [gender, setGender] = useState(genderArray[0]);
     const [error, setError] = useState("");
     const [success, setSuccess] = useState(false);
+    const {URL}=useUrl();
 
     const trigSuccess = () => {
         setSuccess(true);
@@ -24,7 +26,7 @@ const Register = () => {
             return;
         }
 
-        const regApi = "http://localhost:5000/register";
+        const regApi = URL+"/register";
 
         const options = {
             method: "POST",
