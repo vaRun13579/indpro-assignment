@@ -7,7 +7,7 @@ const sqlite3=require("sqlite3");
 const bcrypt=require("bcrypt");
 const jwt=require("jsonwebtoken");
 const app=express();
-app.use(cors());
+app.use(cors({ origin: "*", credentials: true }));
 app.use(express.json());
 
 const dbPath=path.join(__dirname,"task_manager.db");
