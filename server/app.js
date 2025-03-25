@@ -52,6 +52,10 @@ initilizeDatabaseServer().then(async()=>{
             FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
         );
     `);
+
+    // await db.run(`
+    //  ALTER TABLE tasks ADD COLUMN priority TEXT CHECK(priority IN ('High', 'Medium', 'Low')) DEFAULT 'Medium';
+    // `);
     // const isThere= await db.get(`SELECT username FROM users WHERE username=='varun@123';`);
     // const checkUserName= await db.get(`SELECT username FROM users where id='c6e92117-2140-45e2-a3c5-999b816b1aed';`);
     // console.log("query results:",isThere, checkUserName);
@@ -159,21 +163,22 @@ app.get("/", authenticateToken, async (request, response)=>{
     // console.log(userId, request.userId);
     let tasks=await db.all(`SELECT * FROM tasks WHERE user_id=='${userId}';`);
     tasks=tasks.map(ele=>({...ele,bgColor:getRandomColor()}))
-    // console.log(tasks);
+    console.log(tasks);
     response.send(tasks);
 })
 
 // add task to todo list
 app.post("/task/add/", authenticateToken, async (request, response)=>{
   const {userId}=request;
-  const {title, description, status}=request.body;
-  const query=`INSERT INTO tasks (id, user_id, title, description, status) 
+  const {title, description, status, priority='Medium'}=request.body;
+  const query=`INSERT INTO tasks (id, user_id, title, description, status, priority) 
     VALUES (
       '${uuidv4()}',
       '${userId}',
       '${title}',
       '${description}',
-      '${status}'
+      '${status}',
+      '${priority}'
     )`;
   try{
     const result=await db.run(query);
@@ -240,11 +245,11 @@ app.delete("/task/:taskId/delete", authenticateToken, async (request, response)=
 app.put("/task/:taskId/edit", authenticateToken, async (request, response)=>{
   // const {userId}=request;
   const {taskId}=request.params;
-  const {title, description, status}=request.body;
+  const {title, description, status, priority}=request.body;
   console.log("edit request is:",taskId, request.body);
 
   const query=`UPDATE tasks
-    SET title = '${title}', status = '${status}', description = '${description}', updated_at = CURRENT_TIMESTAMP
+    SET title = '${title}', status = '${status}', description = '${description}', updated_at = CURRENT_TIMESTAMP, priority='${priority}'
     WHERE id = '${taskId}';`;
   try{
     const result=await db.run(query);

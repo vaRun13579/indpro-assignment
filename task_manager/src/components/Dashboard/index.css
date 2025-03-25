@@ -162,6 +162,17 @@
     font-weight: 400;
 }
 
+.priority-filter{
+    color:white;
+    border:solid #5683f4 2px;
+    background-color: #5683f4;
+    padding:10px;
+    border-radius: 10px;
+    outline:none;
+    font-size:10px;
+    font-weight: 600;
+}
+
 @media screen and (min-width:700px) {
     .task-list{
         display: flex;

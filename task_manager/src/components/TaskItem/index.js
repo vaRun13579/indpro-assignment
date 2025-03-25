@@ -5,11 +5,12 @@ import "./index.css";
 
 export default (props)=>{
     const {item, deletes, reloadList}=props;
-    const {id, title, description, status, bgColor}=item;
+    const {id, title, description, status, priority, bgColor}=item;
     const [edit, setEdit]=useState(false);
     const [eTitle, setTitle]=useState(title);
     const [eDescription, setDesc]=useState(description);
     const [eStatus, setStatus]=useState(status);
+    const [ePriority, setPriority]=useState(priority);
     const token=Cookies.get('jwt_token');
     const {URL}=useUrl();
 
@@ -35,7 +36,8 @@ export default (props)=>{
                 body:JSON.stringify({
                     'title': `${eTitle}`,
                     'description':`${eDescription}`,
-                    'status':`${eStatus}`
+                    'status':`${eStatus}`,
+                    'priority':`${ePriority}`
                 })
             };
 
@@ -50,7 +52,20 @@ export default (props)=>{
     };
 
     // console.log(getRandomColor());
-
+    let pColor="white";
+    switch(priority){
+        case "High":
+            pColor="#d34726";
+            break;
+        case "Medium":
+            pColor="#f8a018";
+            break;
+        case "Low":
+            pColor="#71974c";
+            break;
+        default:
+            pColor="white";
+    }
     return ( 
         <li className="list-item" style={{backgroundColor:bgColor}}>
             <div className="item-wrapper">
@@ -59,6 +74,7 @@ export default (props)=>{
                 <hr className="line"/>
                 {!edit && <p className="item-desc">{eDescription}</p>}
                 {edit && <textarea rows="4" className="text-area-task-item item-desc" onChange={(ev)=>{setDesc(ev.target.value)}} value={eDescription}/>}
+                {!edit && <div className="priority" style={{color:pColor}}><span className="dot" style={{backgroundColor:pColor}}></span>{ePriority.toUpperCase()}</div>}
             </div>
             <div className="functional-buttons">
                 {edit && <button onClick={()=>{saveEdit();setEdit(ps=>!ps); }} className="edit-item">Save</button>}
@@ -70,6 +86,11 @@ export default (props)=>{
                     <option value="done">done</option>
                     <option value="pending">pending</option>
                     <option value="completed">completed</option>
+                </select>}
+                {edit && <select value={ePriority} onChange={(ev)=>{setPriority(ev.target.value)}} className="status">
+                    <option value="High">High</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Low">Low</option>
                 </select>}
             </div>
         </li>

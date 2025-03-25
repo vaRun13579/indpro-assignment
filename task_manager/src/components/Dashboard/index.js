@@ -10,7 +10,7 @@ import "./index.css";
 const filters = ["", "done", "in progress", "pending", "completed"];
 
 class Dashboard extends Component {
-    state = { todoList: [], filter: filters[0], taskDone: 0, name: "", createTodo: false, searchQuery: "" };
+    state = { todoList: [], filter: filters[0], taskDone: 0, name: "", createTodo: false, searchQuery: "", proFilter:""};
 
     deleteATask = async (id) => {
         const {URL}=this.props;
@@ -91,13 +91,14 @@ class Dashboard extends Component {
     };
 
     render() {
-        const { todoList, filter, taskDone, name, createTodo, searchQuery } = this.state;
+        const { todoList, filter, taskDone, name, createTodo, searchQuery, proFilter } = this.state;
         const todos = todoList.length;
         let percent = todos === 0 ? "0%" : Math.round((taskDone / todos) * 100) + "% Done";
         
         const filteredTasks = todoList
             .filter(ele => ele.status.toLowerCase().includes(filter.toLowerCase()))
-            .filter(ele => ele.title.toLowerCase().includes(searchQuery.toLowerCase()));
+            .filter(ele => ele.title.toLowerCase().includes(searchQuery.toLowerCase()))
+            .filter(ele => ele.priority.toLowerCase().includes(proFilter.toLowerCase()));
 
         const today = new Date();
         const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -123,13 +124,21 @@ class Dashboard extends Component {
                     </div>
                     
                     {/* Search Bar */}
-                    <input 
-                        type="text" 
-                        placeholder="Search tasks..." 
-                        className="search-bar" 
-                        value={searchQuery} 
-                        onChange={this.handleSearch} 
-                    />
+                    <span style={{display:"flex", gap:"15px"}}>
+                        <input 
+                            type="text" 
+                            placeholder="Search tasks..." 
+                            className="search-bar" 
+                            value={searchQuery} 
+                            onChange={this.handleSearch} 
+                        />
+                        <select className="priority-filter" value={proFilter} onChange={(e)=>{this.setState({proFilter:e.target.value})}}>
+                            <option value="">All</option>
+                            <option value="High">High</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Low">Low</option>
+                        </select>
+                    </span>
 
                     <ul className="filter-container">
                         <li onClick={() => this.setState({ filter: filters[0] })} className={filter === "" ? "active-filters" : "filters"}>All</li>
